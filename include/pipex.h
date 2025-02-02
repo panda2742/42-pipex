@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/02 17:36:58 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/02 23:02:18 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <fcntl.h>
 # include "../libft/include/libft.h"
 
-typedef enum	e_bool
+typedef enum e_bool
 {
-	FALSE, TRUE
+	FALSE,
+	TRUE
 }	t_bool;
 
 typedef struct s_pipex_file
@@ -29,6 +30,7 @@ typedef struct s_pipex_file
 	const char	*filename;
 	int			fd;
 	t_bool		is_valid;
+	const char	*content;
 }	t_pipex_file;
 
 typedef struct s_pipe_cmd
@@ -38,7 +40,7 @@ typedef struct s_pipe_cmd
 	char		*output;
 }	t_pipe_cmd;
 
-typedef struct	s_pipex
+typedef struct s_pipex
 {
 	t_pipex_file	*infile;
 	t_pipex_file	*outfile;	
@@ -46,5 +48,7 @@ typedef struct	s_pipex
 }	t_pipex;
 
 t_pipex_file	*init_file(const char *filename, int open_mode);
+t_pipex_file	*read_infile(t_pipex_file *infile);
+void			clear_pipex(t_pipex *pipex);
 
 #endif
