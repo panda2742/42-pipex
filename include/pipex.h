@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/02 23:02:18 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/03 01:49:44 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ typedef enum e_bool
 	FALSE,
 	TRUE
 }	t_bool;
+
+typedef enum e_error_type
+{
+	PIPEX_SYNTAX_ERROR,
+	MALLOC_ERROR
+}	t_error_type;
 
 typedef struct s_pipex_file
 {
