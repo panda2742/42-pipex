@@ -6,50 +6,50 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:51 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/03 01:55:40 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/20 18:47:48 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	printerr(t_error_type error_type)
+char	*find_path(char **envp)
 {
-	ft_printf(RED "An error occured.\n" RESET);
-	if (error_type == PIPEX_SYNTAX_ERROR)
-	{
-		ft_printf(GRAY " - Correct usage:\n" RESET);
-		ft_printf(MAGENTA "   <input> <cmd1> <cmd2> <output>\n" RESET);
-		ft_printf(GRAY "   ...where input is an existing file.\n" RESET);
-	}
-	else if (error_type == MALLOC_ERROR)
-		ft_printf(GRAY "Memory allocation failed." RESET);
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
 }
 
-int	main(int argc, char **argv)
+void	close_pipes(t_pipex *pipex)
 {
-	t_pipex	*pipex;
+	close(pipex->tube[0]);
+	close(pipex->tube[1]);
+}
 
-	if (argc < 5)
-		return (printerr(PIPEX_SYNTAX_ERROR), EXIT_FAILURE);
-	pipex = malloc(sizeof(t_pipex));
-	if (!pipex)
-		return (printerr(MALLOC_ERROR), EXIT_FAILURE);
-	pipex->infile = init_file((const char *)argv[1], O_RDONLY);
-	if (!pipex->infile->is_valid)
-		return (printerr(PIPEX_SYNTAX_ERROR), EXIT_FAILURE);
-	pipex->outfile = init_file((const char *)argv[argc - 1], O_RDWR);
-	read_infile(pipex->infile);
-	clear_pipex(pipex);
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_pipex	pipex;
+
+	if (argc != 5)
+		return (msg(ERR_INPUT));
+	pipex.infile = open(argv[1], O_RDONLY);
+	if (pipex.infile < 0)
+		msg_error(ERR_INFILE);
+	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	if (pipex.outfile < 0)
+		msg_error(ERR_OUTFILE);
+	if (pipe(pipex.tube) < 0)
+		msg_error(ERR_PIPE);
+	pipex.paths = find_path(envp);
+	pipex.cmd_paths = ft_split(pipex.paths, ':');
+	pipex.pid1 = fork();
+	if (pipex.pid1 == 0)
+		first_child(pipex, argv, envp);
+	pipex.pid2 = fork();
+	if (pipex.pid2 == 0)
+		second_child(pipex, argv, envp);
+	close_pipes(&pipex);
+	waitpid(pipex.pid1, NULL, 0);
+	waitpid(pipex.pid2, NULL, 0);
+	parent_free(&pipex);
 	return (0);
-}
-
-void	clear_pipex(t_pipex *pipex)
-{
-	if (pipex->infile->content)
-		free((void *)pipex->infile->content);
-	free(pipex->infile);
-	if (pipex->outfile->content)
-		free((void *)pipex->outfile->content);
-	free(pipex->outfile);
-	free(pipex);
 }

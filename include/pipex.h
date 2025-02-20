@@ -6,55 +6,57 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/03 01:49:44 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/20 18:47:44 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
+# include <sys/types.h>
+# include <sys/uio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <fcntl.h>
+# include <sys/wait.h>
+# include <string.h>
+# include <stdio.h>
 # include "../libft/include/libft.h"
 
-typedef enum e_bool
-{
-	FALSE,
-	TRUE
-}	t_bool;
-
-typedef enum e_error_type
-{
-	PIPEX_SYNTAX_ERROR,
-	MALLOC_ERROR
-}	t_error_type;
-
-typedef struct s_pipex_file
-{
-	const char	*filename;
-	int			fd;
-	t_bool		is_valid;
-	const char	*content;
-}	t_pipex_file;
-
-typedef struct s_pipe_cmd
-{
-	const char	*cmd;
-	const char	*input;
-	char		*output;
-}	t_pipe_cmd;
+# define ERR_INFILE "Infile"
+# define ERR_OUTFILE "Outfile"
+# define ERR_INPUT "Invalid number of arguments.\n"
+# define ERR_PIPE "Pipe"
+# define ERR_CMD "Command not found\n"
 
 typedef struct s_pipex
 {
-	t_pipex_file	*infile;
-	t_pipex_file	*outfile;	
-	t_pipe_cmd		**cmds;
-}	t_pipex;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		tube[2];
+	int		infile;
+	int		outfile;
+	char	*paths;
+	char	**cmd_paths;
+	char	**cmd_args;
+	char	*cmd;
+}			t_pipex;
 
-t_pipex_file	*init_file(const char *filename, int open_mode);
-t_pipex_file	*read_infile(t_pipex_file *infile);
-void			clear_pipex(t_pipex *pipex);
+/* childs.c */
+void	first_child(t_pipex pipex, char *argv[], char *envp[]);
+void	second_child(t_pipex pipex, char *argv[], char *envp[]);
+
+/* free.c */
+void	parent_free(t_pipex *pipex);
+void	child_free(t_pipex *pipex);
+
+/* error.c */
+void	msg_error(char *err);
+int		msg(char *err);
+
+/* funcions */
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *src);
+char	**ft_split(char const *s, char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
