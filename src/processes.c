@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:45:10 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/21 16:23:33 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 17:32:51 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	first_child(t_pipex pipex, char **argv, char **envp)
 			free(pipex.cmd_paths[i]);
 			i++;
 		}
-		msg(ERR_CMD);
+		ft_putstr_fd("Invalid command.", 2);
 		exit(1);
 	}
 	execve(pipex.cmd, pipex.cmd_args, envp);
@@ -73,7 +73,7 @@ void	second_child(t_pipex pipex, char **argv, char **envp)
 			free(pipex.cmd_paths[i]);
 			i++;
 		}
-		msg(ERR_CMD);
+		ft_putstr_fd("Invalid command.", 2);
 		exit(1);
 	}
 	execve(pipex.cmd, pipex.cmd_args, envp);

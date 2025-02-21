@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:51 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/21 16:32:11 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 17:34:14 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ char	*find_path(char **envp)
 
 void	close_pipes(t_pipex *pipex)
 {
-	close(pipex->tube[0]);
-	close(pipex->tube[1]);
+	close(pipex->pipes[0]);
+	close(pipex->pipes[1]);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -30,15 +30,15 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 
 	if (argc != 5)
-		return (msg(ERR_INPUT));
+		return (ft_putstr_fd("Invalid number of arguments.\n", 2));
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
 		perror("Error: ");
 	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000644);
 	if (pipex.outfile < 0)
 		perror("Error: ");
-	if (pipe(pipex.tube) < 0)
-		msg_error(ERR_PIPE);
+	if (pipe(pipex.pipes) < 0)
+		return (perror("Pipe error: "), EXIT_FAILURE);
 	pipex.paths = find_path(envp);
 	pipex.cmd_paths = ft_split(pipex.paths, ':');
 	pipex.pid1 = fork();
