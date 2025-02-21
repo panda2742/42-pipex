@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 00:05:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/20 18:47:51 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 16:17:04 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	parent_free(t_pipex *pipex)
 	free(pipex->cmd_paths);
 }
 
-void	child_free(t_pipex *pipex)
+void	child_free(t_pipex *pipex, int child_ref)
 {
 	int	i;
 
+	(void)child_ref;
 	i = 0;
 	while (pipex->cmd_args[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:51 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/21 09:18:11 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 16:32:11 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	main(int argc, char **argv, char **envp)
 		return (msg(ERR_INPUT));
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
-		msg_error(ERR_INFILE);
+		perror("Error: ");
 	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000644);
 	if (pipex.outfile < 0)
-		msg_error(ERR_OUTFILE);
+		perror("Error: ");
 	if (pipe(pipex.tube) < 0)
 		msg_error(ERR_PIPE);
 	pipex.paths = find_path(envp);

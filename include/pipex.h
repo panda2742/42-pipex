@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/21 09:19:37 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 11:51:28 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	second_child(t_pipex pipex, char **argv, char **envp);
 
 /* free.c */
 void	parent_free(t_pipex *pipex);
-void	child_free(t_pipex *pipex);
+void	child_free(t_pipex *pipex, int child_ref);
 
 /* error.c */
 void	msg_error(char *err);
