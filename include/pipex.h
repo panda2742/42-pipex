@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/20 19:59:09 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:19:37 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_pipex
 }			t_pipex;
 
 /* childs.c */
-void	first_child(t_pipex pipex, char *argv[], char *envp[]);
-void	second_child(t_pipex pipex, char *argv[], char *envp[]);
+void	first_child(t_pipex pipex, char **argv, char **envp);
+void	second_child(t_pipex pipex, char **argv, char **envp);
 
 /* free.c */
 void	parent_free(t_pipex *pipex);
@@ -52,11 +52,5 @@ void	child_free(t_pipex *pipex);
 /* error.c */
 void	msg_error(char *err);
 int		msg(char *err);
-
-/* funcions */
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *src);
-char	**ft_split(char const *s, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

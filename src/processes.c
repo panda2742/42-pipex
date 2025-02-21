@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   childs.c                                           :+:      :+:    :+:   */
+/*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:45:10 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/20 18:51:07 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:18:45 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_command(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	first_child(t_pipex pipex, char *argv[], char *envp[])
+void	first_child(t_pipex pipex, char **argv, char **envp)
 {
 	dup2(pipex.tube[1], 1);
 	close(pipex.tube[0]);
@@ -46,7 +46,7 @@ void	first_child(t_pipex pipex, char *argv[], char *envp[])
 	execve(pipex.cmd, pipex.cmd_args, envp);
 }
 
-void	second_child(t_pipex pipex, char *argv[], char *envp[])
+void	second_child(t_pipex pipex, char **argv, char **envp)
 {
 	dup2(pipex.tube[0], 0);
 	close(pipex.tube[1]);

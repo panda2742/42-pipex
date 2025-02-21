@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/02/20 19:59:00 by ehosta           ###   ########.fr        #
+#    Updated: 2025/02/21 08:57:12 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ override	RM		:=	rm
 .PHONY: all
 all: $(NAME)
 
-$(NAME): $(LIBFT)libft.a $(OBJ)
+$(NAME): $(LIBFT)libft.a $(OBJ) Makefile include/pipex.h
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT)libft.a -o $(NAME)
 
 $(LIBFT)libft.a:

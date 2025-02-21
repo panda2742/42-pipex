@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:51 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/20 18:47:48 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:18:11 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	close_pipes(t_pipex *pipex)
 	close(pipex->tube[1]);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
