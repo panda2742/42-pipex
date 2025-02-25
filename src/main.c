@@ -5,80 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:59:51 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/24 16:17:39 by ehosta           ###   ########.fr       */
+/*   Created: 2021/07/20 17:35:14 by mlazzare          #+#    #+#             */
+/*   Updated: 2025/02/25 10:19:09 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static t_bool	_is_empty(const char *s)
+int	main(int ac, char **ag, char **envp)
 {
-	int	i;
+	int	f1;
+	int	f2;
 
-	i = -1;
-	while (s[++i])
-	{
-		if (s[i] != ' ')
-			return (false);
-	}
-	return (true);
-}
-
-char		**get_path(char **envp)
-{
-	char	**res;
-	char	*env;
-	int		i;
-
-	i = -1;
-	while (envp[++i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 4) != 0)
-			continue ;
-		env = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-		if (!env)
-			return (NULL);
-		res = ft_split(envp[i], ':');
-		free(env);
-		if (!res)
-			return (NULL);
-		return (res);
-	}
-	return (NULL);
-}
-
-int	pipex(t_pipex *p, char **argv, char **envp)
-{
-	init_cmd(&p->cmd1);
-	init_cmd(&p->cmd2);
-	p->children_status[0] = true;
-	p->children_status[1] = true;
-	exec_cmd(p, argv, envp);
-	if (p->children_status[0])
-		clear_cmd(&p->cmd1);
-	if (p->children_status[1])
-		clear_cmd(&p->cmd2);
-	return (EXIT_SUCCESS);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	int	pipex_result;
-
-	if (argc != 5)
-		return ((void)ft_putstr_fd("I expect 4 arguments: {infile} {cmd} {cmd} [outfile]\n", 2), EXIT_FAILURE);
-	if (_is_empty(argv[2]) || _is_empty(argv[3]))
-		return (EXIT_FAILURE);
-	t_pipex	p;
-	p.infile = open(argv[1], O_RDONLY);
-	if (p.infile < 0)
-		return ((void)perror(argv[1]), EXIT_FAILURE);
-	p.outfile = open(argv[4], O_TRUNC | O_RDWR | O_CREAT, 00777);
-	if (p.outfile < 0)
-		return ((void)perror(argv[4]), EXIT_FAILURE);
-	pipex_result = pipex(&p, argv, envp);
-	close(p.infile);
-	close(p.outfile);
-	return (pipex_result);
+	if (ac != 5)
+		return (ft_putstr_fd("Invalid number of arguments.", 2));
+	if (check_empty(ag[2]) || check_empty(ag[3]))
+		return (1);
+	f1 = open(ag[1], O_RDONLY);
+	f2 = open(ag[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (f1 < 0)
+		return (perror("-pipex error (infile)"), EXIT_FAILURE);
+	if (f2 < 0)
+		return (perror("-pipex error (outfile)"), EXIT_FAILURE);
+	pipex(f1, f2, ag, envp);
+	if (close(f1) < 0 || close(f2) < 0)
+		return (ft_putstr_fd(strerror(errno), 2));
+	return (0);
 }
