@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 17:35:14 by mlazzare          #+#    #+#             */
-/*   Updated: 2025/02/25 16:18:12 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:24:26 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	cmd2;
 
 	if (argc != 5)
-		return (ft_putstr_fd("Invalid number of arguments.", 2));
+		return (ft_putstr_fd("Invalid number of arguments.\n", 2));
 	if (check_empty(argv[2]) || check_empty(argv[3]))
 		return (1);
 	f1 = open(argv[1], O_RDONLY);
