@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 15:31:22 by mlazzare          #+#    #+#             */
-/*   Updated: 2025/02/25 14:12:53 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:20:15 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,24 @@ t_bool	check_empty(char *s)
 		if (s[i] != ' ')
 			return (false);
 	}
-	error_msg(s);
+	ft_putstr_fd("-pipex error: ", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd(": command not found.\n", 2);
 	return (true);
 }
 
-void	error_msg(char *c)
+void	free_child(t_cmd *cmd1, t_cmd *cmd2, int exit_status)
 {
-	ft_putstr_fd("-pipex error: ", 2);
-	ft_putstr_fd(c, 2);
-	ft_putstr_fd(": command not found.\n", 2);
+	free_struct(cmd1);
+	free_struct(cmd2);
+	exit(exit_status);
+}
+
+void	free_child_error(t_cmd *cmd1, t_cmd *cmd2, int pipefd[2], int fd)
+{
+	perror("-child error");
+	close(fd);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	free_child(cmd1, cmd2, EXIT_FAILURE);
 }

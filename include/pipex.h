@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:59:49 by ehosta            #+#    #+#             */
-/*   Updated: 2025/02/25 10:41:50 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:16:43 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,10 @@ typedef struct s_cmd
 	int		f;
 }	t_cmd;
 
-void	pipex(int f1, int f2, char **ag, char **ep);
 void	exec_cmd(t_cmd *cmd1, t_cmd *cmd2, char **envp);
-void	error_msg(char *c);
-int		check_cmd(t_cmd *c);
 t_bool	check_empty(char *s);
-
-char	*get_full_path(char *path, char *cmd_name);
-
 void	free_struct(t_cmd *c);
-void	free_all(t_cmd *c, t_cmd *d);
+void	free_child(t_cmd *cmd1, t_cmd *cmd2, int exit_status);
+void	free_child_error(t_cmd *cmd1, t_cmd *cmd2, int pipefd[2], int fd);
 
 #endif
