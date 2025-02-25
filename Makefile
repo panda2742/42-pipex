@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/02/25 16:22:22 by ehosta           ###   ########.fr        #
+#    Updated: 2025/02/25 16:23:48 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(LIBFT)libft.a:
 	make -C $(LIBFT) all
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(DIRS)
-	$(CC) $(CFLAGS) -I include/ -I libft/include/ -c $< -o $@
+	$(CC) $(CFLAGS) -I include/ -I lib/include/ -c $< -o $@
 
 .PHONY: clean
 clean:
