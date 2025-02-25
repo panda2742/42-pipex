@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/02/25 14:17:23 by ehosta           ###   ########.fr        #
+#    Updated: 2025/02/25 16:22:22 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	DEPS		:=	$(patsubst %.o,%.d,$(OBJ))
 override	DIRS		:=	$(sort $(dir $(NAME) $(OBJ) $(DEPS)))
 
-override	LIBFT		:=	libft/
+override	LIBFT		:=	lib/
 
 OFLAGS		:=	-O3
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -g3
