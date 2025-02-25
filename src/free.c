@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 15:31:22 by mlazzare          #+#    #+#             */
-/*   Updated: 2025/02/25 10:18:07 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:12:53 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@ t_bool	check_empty(char *s)
 
 void	error_msg(char *c)
 {
-	ft_eprintf("-pipex error: %s: command not found.\n", c);
-}
-
-void	free_all(t_cmd *c, t_cmd *d)
-{
-	free_struct(c);
-	free_struct(d);
+	ft_putstr_fd("-pipex error: ", 2);
+	ft_putstr_fd(c, 2);
+	ft_putstr_fd(": command not found.\n", 2);
 }
