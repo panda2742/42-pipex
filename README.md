@@ -1,6 +1,6 @@
 # pipex
 
-Reproduce the behavior of a pipe in bash.
+Remake of the pipe operator's behavior in shell. Exemple: <code>./pipex infile cmd cmd outfile</code> imitates <code>< infile cmd | cmd > outfile</code>.
 
 | Project | pipex                      |
 |:--------|---------------------------:|
